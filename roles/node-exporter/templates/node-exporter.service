@@ -1,0 +1,15 @@
+[Unit]
+Description=node-exporter-{{ node_exporter_version }}
+
+[Service]
+RuntimeDirectory=node-exporter
+PrivateTmp=true
+Type=simple
+User={{ node_exporter_user }}
+Group={{ node_exporter_user }}
+ExecStart={{ node_exporter_home }}/node_exporter
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,9 @@
+---
+
+- name: node-exporter installation & configuration
+  hosts: all
+  gather_facts: true
+  become: true
+  become_method: sudo
+  roles:
+    - node-exporter

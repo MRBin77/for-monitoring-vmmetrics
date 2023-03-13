@@ -1,0 +1,9 @@
+all:
+  vars:
+    ansible_connection: ssh
+    ansible_user: vagrant
+    ansible_ssh_pass: vagrant
+  hosts:
+    vagrant:
+      ansible_host: localhost
+      ip: 127.0.0.1

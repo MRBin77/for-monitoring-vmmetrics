@@ -1,0 +1,30 @@
+---
+- hosts: all
+  gather_facts: true
+  become: true
+  become_method: sudo
+
+  tasks:
+    - name: Stop services
+      systemd:
+        daemon_reload: no
+        name: "{{ item }}"
+        state: stopped
+        enabled: yes
+      with_items:
+        - node-exporter
+      ignore_errors: true
+
+    - name: Removing directories and files
+      file:
+        state: absent
+        path: "{{ item }}"
+      with_items:
+        - /opt/node-exporter
+        - /run/node-exporter
+        - /tmp/node_exporter-{{ node_exporter_version }}.linux-amd64.tar.gz
+        - /etc/systemd/system/node-exporter.service
+        - /etc/systemd/system/multi-user.target.wants/node-exporter.service
+
+
+

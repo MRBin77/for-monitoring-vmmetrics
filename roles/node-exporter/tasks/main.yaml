@@ -1,0 +1,4 @@
+---
+
+- name: include node-exporter.yaml
+  include: node-exporter.yaml

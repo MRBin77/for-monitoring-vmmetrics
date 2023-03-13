@@ -1,0 +1,5 @@
+---
+
+systemctl_path: /etc/systemd/system
+
+node_exporter_home: /opt/node-exporter

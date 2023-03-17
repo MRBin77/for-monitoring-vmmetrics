@@ -13,18 +13,34 @@
         enabled: yes
       with_items:
         - node-exporter
+        - victoriametrics-vmagent
       ignore_errors: true
 
-    - name: Removing directories and files
-      file:
-        state: absent
-        path: "{{ item }}"
-      with_items:
-        - /opt/node-exporter
-        - /run/node-exporter
-        - /tmp/node_exporter-{{ node_exporter_version }}.linux-amd64.tar.gz
-        - /etc/systemd/system/node-exporter.service
-        - /etc/systemd/system/multi-user.target.wants/node-exporter.service
+    - block:
+      - name: Collect files and directories
+        find:
+          paths: "{{ item.0 }}"
+          patterns: "{{ item.1 }}"
+          hidden: True
+          recurse: True
+          file_type: any
+        with_nested:
+          - ['/etc/','/run/','/tmp','/usr/local/bin']
+          - ['node-expoter', 'victoriametrics*'] 
+        register: collected_files_directories
+
+      # - name: debug
+      #   debug:
+      #     msg: "{{ item.1.path }}"
+      #   with_items:
+      #     - "{{ collected_files.results | subelements('files') }}"
+
+      - name: Remove directories and files
+        file:
+          path: "{{ item.1.path }}"
+          state: absent
+        with_items:
+          - "{{  collected_files_directories.results | subelements('files') }}"
 
 
 

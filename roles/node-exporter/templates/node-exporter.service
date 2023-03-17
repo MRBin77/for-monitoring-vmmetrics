@@ -8,8 +8,12 @@ Type=simple
 User={{ node_exporter_user }}
 Group={{ node_exporter_user }}
 ExecStart={{ node_exporter_home }}/node_exporter
+ExecStop=/bin/kill -s SIGTERM $MAINPID
 ExecReload=/bin/kill -HUP $MAINPID
+StartLimitBurst=5
+StartLimitInterval=0
 Restart=on-failure
+RestartSec=1
 
 [Install]
 WantedBy=multi-user.target

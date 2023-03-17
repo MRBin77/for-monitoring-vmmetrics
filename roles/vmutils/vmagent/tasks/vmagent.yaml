@@ -1,0 +1,34 @@
+---
+- name: vmAgent Install | Download vmutils {{ vmutils_version }}
+  get_url:
+    url: "{{ vmutils_download_url }}"
+    dest: "/tmp/"
+  register: download
+
+- name: vmAgent Install | Untar archive
+  unarchive:
+    src: "/tmp/vmutils-linux-amd64-v{{ vmutils_version }}.tar.gz"
+    dest: "{{ vmagent_home }}"
+    extra_opts: ['vmagent-prod']
+    remote_src: true
+
+- name: vmAgent Install | Create directory
+  file:
+    path: "/etc/victoriametrics"
+    state: directory
+
+- name: vmAgent Install | Create config
+  template:
+    src: prometheus-vmagent.yaml
+    dest: "/etc/victoriametrics"
+
+- name: vmAgent Install | Create systemd unit
+  template:
+    src: victoriametrics-vmagent.service
+    dest: "{{ systemctl_path }}"
+
+- name: vmAgent Install | Reload and Start systemd unit VmAgent
+  systemd:
+    state: restarted
+    daemon_reload: true
+    name: victoriametrics-vmagent.service

@@ -6,4 +6,5 @@
   become: true
   become_method: sudo
   roles:
-    - node-exporter
+    # - node-exporter
+    - vmutils

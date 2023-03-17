@@ -1,7 +1,13 @@
 artifact_repository: "https://github.com"
 
-node_exporter_version: "1.5.0"
+node_exporter_version: 1.5.0
 
 node_exporter_download_url: "{{ artifact_repository }}/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.linux-amd64.tar.gz"
 
 node_exporter_user: "root"
+
+vmutils_version: 1.89.1
+
+vmutils_download_url: "{{ artifact_repository }}/VictoriaMetrics/VictoriaMetrics/releases/download/v{{ vmutils_version }}/vmutils-linux-amd64-v{{ vmutils_version }}.tar.gz"
+
+vmagent_user: "root"

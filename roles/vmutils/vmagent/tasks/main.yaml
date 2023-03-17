@@ -1,0 +1,4 @@
+---
+
+- name: include vmagent.yaml
+  include: vmagent.yaml

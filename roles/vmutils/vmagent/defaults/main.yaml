@@ -2,4 +2,4 @@
 
 systemctl_path: /etc/systemd/system
 
-node_exporter_home: /usr/local/bin
+vmagent_home: /usr/local/bin

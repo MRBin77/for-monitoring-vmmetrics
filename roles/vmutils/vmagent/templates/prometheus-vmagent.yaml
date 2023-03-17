@@ -1,0 +1,23 @@
+scrape_configs:
+- job_name: static
+  static_configs:
+
+    # targets must contain a list of `host:port` targets to scrape.
+    # The `http://host:port/metrics` endpoint is scraped per each configured traget then.
+    # The `http` scheme can be changed to `https` by setting it via `scheme` field at `scrape_config` level.
+    # The `/metrics` path can be changed to arbitrary path via `metrics_path` field at `scrape_config` level.
+    # See https://docs.victoriametrics.com/sd_configs.html#scrape_configs .
+    #
+    # Alternatively the scheme and path can be changed via `relabel_configs` section at `scrape_config` level.
+    # See https://docs.victoriametrics.com/vmagent.html#relabeling .
+    #
+    # It is also possible specifying full target urls here, e.g. "http://host:port/metrics/path?query_args"
+  - targets:
+    - "http://127.0.0.1:9100"
+
+    # labels is an optional labels to add to all the targets.
+    # labels:
+    #   <labelname1>: "<labelvalue1>"
+    #   ...
+    #   <labelnameN>: "<labelvalueN>"
+

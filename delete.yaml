@@ -14,6 +14,9 @@
       with_items:
         - node-exporter
         - victoriametrics-vmagent
+        - victoriametrics-vminsert
+        - victoriametrics-vmstorage
+        - victoriametrics-vmselect
       ignore_errors: true
 
     - block:
@@ -26,7 +29,7 @@
           file_type: any
         with_nested:
           - ['/etc/','/run/','/tmp','/usr/local/bin']
-          - ['node-expoter', 'victoriametrics*'] 
+          - ['node-expoter', 'victoriametrics*', 'vmagent', 'vminsert', 'vmselect', 'vmstorage'] 
         register: collected_files_directories
 
       # - name: debug

@@ -1,3 +1,4 @@
+{% for host in groups['vmagent'] %}
 [Unit]
 Description=victoriametrics-vmagent
 After=network.target
@@ -8,7 +9,7 @@ Type=simple
 PrivateTmp=true
 User={{ vmagent_user }}
 PIDFile=/run/vmagent/vmagent.pid
-ExecStart={{ binary_path }}/vmagent-prod -promscrape.config.strictParse=false -promscrape.config={{ config_path }}/{{ config_name }} -remoteWrite.url={{ remoteWriteUrl }}
+ExecStart={{ binary_path }}/vmagent-prod -promscrape.config.strictParse=false -promscrape.config={{ config_path }}/{{ config_name }} -remoteWrite.url={{ hostvars[host]['vars']['remoteWriteUrl'] }}
 ExecStop=/bin/kill -s SIGTERM $MAINPID
 StartLimitBurst=5
 StartLimitInterval=0
@@ -17,3 +18,4 @@ RestartSec=1
 
 [Install]
 WantedBy=multi-user.target
+{% endfor %}

@@ -9,5 +9,3 @@ binary_path: /usr/local/bin
 config_path: /etc/victoriametrics/vmagent
 
 config_name: prometheus-vmagent.yaml
-
-remoteWriteUrl: http://127.0.0.1:8400/insert/001/prometheus/api/v1/write

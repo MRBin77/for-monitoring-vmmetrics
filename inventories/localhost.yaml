@@ -2,11 +2,36 @@ all:
   vars:
     ansible_connection: ssh
     ansible_user: vagrant
-    ansible_ssh_pass: vagrant
-    storageNodes_write: 127.0.0.1:8401
-    storageNodes_read: 127.0.0.1:8400
-    selectNode: 127.0.0.1:8481
-  hosts:
-    vagrant:
-      ansible_host: localhost
-      ip: 127.0.0.1
+    ansible_ssh_pass: vagrant  
+  children:
+    # vagrant:
+    #   hosts:
+    #     ansible_host: localhost
+    #     ip: 127.0.0.1
+    vmagent:
+      hosts:
+        vmagent_hostname:
+          ansible_host: localhost
+          ip: 127.0.0.1
+          vars:
+            remoteWriteUrl: "http://127.0.0.1:8480/insert/001/prometheus/api/v1/write"
+    vminsert:
+      hosts:
+        vminsert_hostname:
+          ansible_host: localhost
+          ip: 127.0.0.1
+          vars:
+            storageNodes_write: 127.0.0.1:8401
+    vmstorage:
+      hosts:
+        vmstorage_hostname:
+          ansible_host: localhost
+          ip: 127.0.0.1
+    vmselect:
+      hosts:
+        vmselect_hostname:
+          ansible_host: localhost
+          ip: 127.0.0.1 
+          vars:
+            storageNodes_read: 127.0.0.1:8400
+            selectNode: 127.0.0.1:8481     

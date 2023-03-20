@@ -1,3 +1,4 @@
+{% for host in groups['vminsert'] %}
 [Unit]
 Description=victoriametrics-vminsert
 After=network.target
@@ -8,14 +9,14 @@ Type=simple
 PrivateTmp=true
 User={{ vmetrics_user }}
 PIDFile=/run/vminsert/vminsert.pid
-ExecStart={{ binary_path }}/vminsert-prod -replicationFactor=3 -storageNode={{ storageNodes_write }} -relabelConfig={{ config_path }}/{{ config_name }} -maxConcurrentInserts=8 -insert.maxQueueDuration=2m0s
+ExecStart={{ binary_path }}/vminsert-prod -replicationFactor=3 -storageNode={{ hostvars[host]['vars']['storageNodes_write'] }} -relabelConfig={{ config_path }}/{{ config_name }} -maxConcurrentInserts=8 -insert.maxQueueDuration=2m0s
 ExecStop=/bin/kill -s SIGTERM $MAINPID
 StartLimitBurst=5
 StartLimitInterval=0
 Restart=on-failure
 RestartSec=1
-NowNewPriviliges=yes
-
+NoNewPrivileges=true
 
 [Install]
 WantedBy=multi-user.target
+{% endfor %}

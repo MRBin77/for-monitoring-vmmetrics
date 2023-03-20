@@ -1,3 +1,4 @@
+{% for host in groups['vmselect'] %}
 [Unit]
 Description=victoriametrics-vmselect
 After=network.target
@@ -8,7 +9,7 @@ Type=simple
 PrivateTmp=true
 User={{ vmetrics_user }}
 PIDFile=/run/vmselect/vmselect.pid
-ExecStart={{ binary_path }}/vmselect-prod -search.maxUniqueTimeseries=1000000000 -search.maxQueryDuration=120s -dedup.minScrapeInterval=1ms -cacheDataPath={{ binary_path }}/victoria-cache -memory.allowedPercent=60 -replicationFactor=3 -storageNode={{ storageNodes_read }} -selectNode={{ selectNode }}
+ExecStart={{ binary_path }}/vmselect-prod -search.maxUniqueTimeseries=1000000000 -search.maxQueryDuration=120s -dedup.minScrapeInterval=1ms -cacheDataPath={{ binary_path }}/victoria-cache -memory.allowedPercent=60 -replicationFactor=3 -storageNode={{ hostvars[host]['vars']['storageNodes_read'] }} -selectNode={{ hostvars[host]['vars']['selectNode'] }}
 ExecStop=/bin/kill -s SIGTERM $MAINPID
 StartLimitBurst=5
 StartLimitInterval=0
@@ -18,3 +19,4 @@ NowNewPriviliges=yes
 
 [Install]
 WantedBy=multi-user.target
+{% endfor %}

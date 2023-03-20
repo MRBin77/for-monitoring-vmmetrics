@@ -1,0 +1,34 @@
+---
+- name: vmInsert Install | Download vmetrics {{ vmetrics_version }}
+  get_url:
+    url: "{{ vmetrics_download_url }}"
+    dest: "/tmp/"
+  register: download
+
+- name: vmInsert Install | Untar archive
+  unarchive:
+    src: "/tmp/victoria-metrics-linux-amd64-v{{ vmetrics_version }}-cluster.tar.gz"
+    dest: "{{ binary_path }}"
+    extra_opts: ['vminsert-prod']
+    remote_src: true
+
+- name: vmInsert Install | Create directory
+  file:
+    path: "{{ config_path }}"
+    state: directory
+
+- name: vmInsert Install | Create config
+  template:
+    src:  "{{ config_name }}"
+    dest: "{{ config_path }}"
+
+- name: vmInsert Install | Create systemd unit
+  template:
+    src: "{{ systemd_unit }}"
+    dest: "{{ systemd_path }}"
+
+- name: vmInsert Install | Reload and Start systemd unit vmInsert
+  systemd:
+    state: restarted
+    daemon_reload: true
+    name: "{{ systemd_unit }}"

@@ -1,0 +1,7 @@
+---
+
+systemd_path: /etc/systemd/system
+
+systemd_unit: victoriametrics-vmselect.service
+
+binary_path: /usr/local/bin

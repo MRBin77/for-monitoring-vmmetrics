@@ -8,7 +8,7 @@ Type=simple
 PrivateTmp=true
 User={{ vmagent_user }}
 PIDFile=/run/vmagent/vmagent.pid
-ExecStart={{ vmagent_home }}/vmagent-prod -promscrape.config.strictParse=false -promscrape.config=/etc/victoriametrics/prometheus-vmagent.yaml -remoteWrite.url=http://127.0.0.1:8400/insert/001/prometheus/api/v1/write
+ExecStart={{ binary_path }}/vmagent-prod -promscrape.config.strictParse=false -promscrape.config={{ config_path }}/{{ config_name }} -remoteWrite.url={{ remoteWriteUrl }}
 ExecStop=/bin/kill -s SIGTERM $MAINPID
 StartLimitBurst=5
 StartLimitInterval=0

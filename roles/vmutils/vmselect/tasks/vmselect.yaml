@@ -1,0 +1,24 @@
+---
+- name: vmSelect Install | Download vmetrics {{ vmetrics_version }}
+  get_url:
+    url: "{{ vmetrics_download_url }}"
+    dest: "/tmp/"
+  register: download
+
+- name: vmSelect Install | Untar archive
+  unarchive:
+    src: "/tmp/victoria-metrics-linux-amd64-v{{ vmetrics_version }}-cluster.tar.gz"
+    dest: "{{ binary_path }}"
+    extra_opts: ['vmselect-prod']
+    remote_src: true
+
+- name: vmSelect Install | Create systemd unit
+  template:
+    src: "{{ systemd_unit }}"
+    dest: "{{ systemd_path }}"
+
+- name: vmSelect Install | Reload and Start systemd unit vmSelect
+  systemd:
+    state: restarted
+    daemon_reload: true
+    name: "{{ systemd_unit }}"

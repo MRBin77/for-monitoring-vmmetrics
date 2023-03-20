@@ -3,6 +3,9 @@ all:
     ansible_connection: ssh
     ansible_user: vagrant
     ansible_ssh_pass: vagrant
+    storageNodes_write: 127.0.0.1:8401
+    storageNodes_read: 127.0.0.1:8400
+    selectNode: 127.0.0.1:8481
   hosts:
     vagrant:
       ansible_host: localhost

@@ -1,0 +1,4 @@
+---
+
+- name: include vmselect.yaml
+  include: vmselect.yaml

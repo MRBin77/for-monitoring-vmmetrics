@@ -8,27 +8,27 @@
 - name: vmAgent Install | Untar archive
   unarchive:
     src: "/tmp/vmutils-linux-amd64-v{{ vmutils_version }}.tar.gz"
-    dest: "{{ vmagent_home }}"
+    dest: "{{ binary_path }}"
     extra_opts: ['vmagent-prod']
     remote_src: true
 
-- name: vmAgent Install | Create directory
+- name: vmAgent Install | Create config directory
   file:
-    path: "/etc/victoriametrics"
+    path: "{{ config_path }}"
     state: directory
 
-- name: vmAgent Install | Create config
+- name: vmAgent Install | Create config file
   template:
-    src: prometheus-vmagent.yaml
-    dest: "/etc/victoriametrics"
+    src:  "{{ config_name }}"
+    dest: "{{ config_path }}"
 
 - name: vmAgent Install | Create systemd unit
   template:
-    src: victoriametrics-vmagent.service
-    dest: "{{ systemctl_path }}"
+    src:  "{{ systemd_unit }}"
+    dest: "{{ systemd_path }}"
 
 - name: vmAgent Install | Reload and Start systemd unit VmAgent
   systemd:
     state: restarted
     daemon_reload: true
-    name: victoriametrics-vmagent.service
+    name: "{{ systemd_unit }}"

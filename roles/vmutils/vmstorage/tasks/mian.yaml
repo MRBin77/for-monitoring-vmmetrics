@@ -1,0 +1,4 @@
+---
+
+- name: include vmstorage.yaml
+  include: vmstorage.yaml

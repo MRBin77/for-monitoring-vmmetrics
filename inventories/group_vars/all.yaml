@@ -1,13 +1,21 @@
 artifact_repository: "https://github.com"
-
+#### node exporter #####
 node_exporter_version: 1.5.0
 
 node_exporter_download_url: "{{ artifact_repository }}/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.linux-amd64.tar.gz"
 
 node_exporter_user: "root"
 
+#### vmagent ####
 vmutils_version: 1.89.1
 
 vmutils_download_url: "{{ artifact_repository }}/VictoriaMetrics/VictoriaMetrics/releases/download/v{{ vmutils_version }}/vmutils-linux-amd64-v{{ vmutils_version }}.tar.gz"
 
 vmagent_user: "root"
+
+#### victoria metrics cluster ####
+vmetrics_version: 1.89.1
+
+vmetrics_download_url: "{{ artifact_repository }}/VictoriaMetrics/VictoriaMetrics/releases/download/v{{ vmetrics_version }}/victoria-metrics-linux-amd64-v{{ vmetrics_version }}-cluster.tar.gz"
+
+vmetrics_user: "root"

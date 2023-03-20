@@ -14,7 +14,7 @@ all:
           ansible_host: localhost
           ip: 127.0.0.1
           vars:
-            remoteWriteUrl: "http://127.0.0.1:8480/insert/001/prometheus/api/v1/write"
+            remoteWriteUrl: "http://127.0.0.1:8480/insert/001/prometheus"
     vminsert:
       hosts:
         vminsert_hostname:
